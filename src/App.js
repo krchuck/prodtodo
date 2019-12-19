@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, } from 'react';
+import { Form, Header, Container, List, Segment, } from "semantic-ui-react"
 
-function App() {
+const App = () => {
+  [todos, setTodos] = useState ([])
+  [name, setName] = useState("")
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setTodos([name, ...todos])
+    setName("")
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Container>
+      <Segment textAlign="center">
+        <Header as="h3">Todo List</Header>
+        <Form>
+          <Form.Input 
+            required
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
+        </Form>
+        <List>
+          { todos.map( (todo, i) => <List.Item key={i}>{todo}</List.Item> ) }
+        </List>
+      </Segment>
+    </Container>
+  )
 }
 
 export default App;
